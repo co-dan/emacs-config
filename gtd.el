@@ -1,13 +1,10 @@
-;;(setq load-path (cons "~/tools/org-8.0.2/contrib/lisp" load-path))
+;; Getting shit done
 
-(setq load-path (append '("~/projects/emacs/org-mode/lisp" "~/projects/emacs/org-mode/contrib/lisp") load-path))
+(add-to-list 'load-path "~/projects/emacs/org-mode/lisp")
+(add-to-list 'load-path "~/projects/emacs/org-mode/contrib/lisp" t)
 
 (require 'org)
-(custom-set-faces
- '(org-link ((t (:foreground "aqua" :underline t))))
- '(org-date ((t (:foreground "RoyalBlue1" :underline t)))))
 
-;; IDO
 (setq org-completion-use-ido t)
 
 (require 'org-mac-link-grabber)
@@ -27,12 +24,12 @@
                   (org-mac-iCal)))))
             '(" " "Agenda"
                ((agenda "" ((org-agenda-span 1)))
-                (tags-todo "personal"
-                           ((org-agenda-overriding-header "Personal tasks")
-                            (org-agenda-sorting-strategy
-                             '(priority-down category-keep))))
                 (tags-todo "soc"
                            ((org-agenda-overriding-header "GSoC")
+                            (org-agenda-sorting-strategy
+                             '(priority-down category-keep))))
+                (tags-todo "personal"
+                           ((org-agenda-overriding-header "Personal tasks")
                             (org-agenda-sorting-strategy
                              '(priority-down category-keep))))
                 (tags-todo "work"
@@ -104,3 +101,22 @@
 ;; org latex
 (require 'ox-latex)
 (require 'ox-beamer)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Notifiactions and appointments
+
+;; Cleans the appt list before adding agenda items
+(defadvice org-agenda-to-appt (before wickedcool activate)
+  "Clear the appt-time-msg-list."
+  (setq appt-time-msg-list nil))
+
+(defun appt-alarm (msg)
+  (call-process "~/apptnotify.sh" nil nil nil msg))
+
+(defun appt-display-message (string mins)
+  (appt-alarm (format "%s \nin  %d minute(s)" string mins)))
+
+(add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt)
+(setq appt-display-mode-line t)
+(appt-activate 1)
+(display-time) 
