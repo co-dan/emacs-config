@@ -7,9 +7,12 @@
 
 (setq org-completion-use-ido t)
 
-(require 'org-mac-link-grabber)
+(require 'org-mac-link)
 (add-hook 'org-mode-hook (lambda () 
-  (define-key org-mode-map (kbd "C-c g") 'omlg-grab-link)))
+  (define-key org-mode-map (kbd "C-c g") 'org-mac-grab-link)))
+
+(add-hook 'org-mode-hook (lambda () 
+  (define-key org-mode-map (kbd "C-c a") 'org-agenda)))
 
 (defun mail-import-flagged ()
   (let ((org-mac-mail-account "Gmail"))
@@ -78,6 +81,7 @@
 
 (setq org-agenda-files (list "~/Dropbox/notes/notes.org"
                              "~/Dropbox/notes/projects.org"
+                             "~/Dropbox/notes/study.org"
                              "~/Dropbox/notes/gsoc/diagrams.org"
                              "~/Dropbox/notes/gsoc/current.org"))
 
