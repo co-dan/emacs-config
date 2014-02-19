@@ -56,6 +56,8 @@
   '(add-to-list 'preview-default-preamble "\\PreviewEnvironment{tikzpicture}" t)
   )
 
+(setq preview-gs-options '("-q" "-dNOSAFER" "-dNOPAUSE" "-DNOPLATFONTS" "-dPrinted" "-dTextAlphaBits=4" "-dGraphicsAlphaBits=4"))
+
 ;; ORG writing
 (setq org-export-with-smart-quotes t)
 
