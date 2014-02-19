@@ -78,12 +78,10 @@
 (setq org-use-fast-todo-selection t)
 (setq org-enforce-todo-dependencies t)
 
-
 (setq org-agenda-files (list "~/Dropbox/notes/notes.org"
                              "~/Dropbox/notes/projects.org"
                              "~/Dropbox/notes/study.org"
-                             "~/Dropbox/notes/gsoc/diagrams.org"
-                             "~/Dropbox/notes/gsoc/current.org"))
+                             "~/Dropbox/notes/research.org"))
 
 (global-set-key (kbd "C-M-r") 'org-capture)
 (setq org-default-notes-file "~/Dropbox/notes/refile.org")

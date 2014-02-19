@@ -26,7 +26,7 @@
 ;; ;;(setq ghc-ghc-options '("-i ~/Library/Haskell/ghc-7.6.3/lib"))
 (if (file-accessible-directory-p "~/mnt/ghcjs1/dev")
     (setq ghc-module-command "/Users/dan/vado-ghc-mod.sh")
-    (setq ghc-module-command "/Users/dan/Library/Haskell/bin/ghc-mod"))
+    (setq ghc-module-command "/Users/dan/Library/Haskell/ghc-7.6.3/lib/ghc-mod-3.1.4/bin/ghc-mod"))
 
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
@@ -66,7 +66,14 @@ added to `haskell-mode-hook'"
 
 ;; Proof General
 (load-file "~/ProofGeneral/generic/proof-site.el")
-
+;; (setq coq-prog-args
+;;       '("-emacs-U"
+;;         "-R" "/Users/dan/projects/coq-categories" "Cat"))
+(setq coq-prog-args
+      (append
+       '("-R" "/Users/dan/projects/math-classes/src" "MathClasses"
+         "-R" "/Users/dan/projects/coq-categories" "Cat")
+       '("-emacs-U")))
 
 ;; Flymake
 (global-set-key "\M-n" 'flymake-goto-next-error)
