@@ -1,6 +1,14 @@
 ;; General stuff for writing
-
-(setq ispell-program-name "/usr/local/bin/aspell")
+(require 'ispell)
+(setq ispell-program-name "/usr/local/bin/aspell"
+      ispell-extra-args '("--sug-mode=ultra"))
+(setq ispell-list-command "list")
+(setq ispell-local-dictionary "ru")
+(add-to-list 'ispell-dictionary-alist
+             '("ru"
+               "[АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюя]"
+               "[^АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюя]"
+               "" nil nil nil utf-8))
 
 ;; Markdown settings
 (autoload 'markdown-mode "markdown-mode"
@@ -20,13 +28,41 @@
 
 ;; LaTeX
 
-(setq TeX-output-view-style (quote (("^pdf$" "." "open -a Preview.app %o") ("^dvi$" "^xdvi$" "open-x11 %(o?)xdvi %dS %d") ("^dvi$" "^TeXniscope$" "open -a TeXniscope.app %o") ("^pdf$" "." "open %o") ("^html?$" "." "open %o"))))
+(TeX-global-PDF-mode t)
+;; (setq TeX-parse-self t)
+;; (setq-default TeX-master nil)
+
+;; (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
+
+;; (setq TeX-source-correlate-method 'synctex)
+
+;; (add-hook 'LaTeX-mode-hook
+;;       (lambda()
+;;         (add-to-list 'TeX-expand-list
+;;              '("%q" skim-make-url))))
+
+;; (defun skim-make-url () (concat
+;;         (TeX-current-line)
+;;         " "
+;;         (expand-file-name (funcall file (TeX-output-extension) t)
+;;             (file-name-directory (TeX-master-file)))
+;;         " "
+;;         (buffer-file-name)))
+
+;; (setq TeX-view-program-list
+;;       '(("Skim" "/Applications/Skim.app/Contents/SharedSupport/displayline %q")))
+
+;; (setq TeX-view-program-selection '((output-pdf "Skim")))
+
+;; (add-to-list 'TeX-output-view-style
+;;              '("^pdf$" "."
+;;                "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o %b"))
 
 (setq TeX-view-program-list
       '(("Skim" "open -a Skim.app %o")
         ("Preview" "open -a Preview.app %o")))
 
-(setq TeX-view-program-selection '((output-pdf "Preview")))
+(setq TeX-view-program-selection '((output-pdf "Skim")))
 
 (defun fix-latex-cmd () 
   (setf (cadr (assoc "LaTeX" TeX-command-list)) "%`%l%(mode) -file-line-error %' %t"))
@@ -38,10 +74,10 @@
 (add-hook 'LaTeX-mode-hook 'outline-minor-mode)
 
 (add-to-list 'reftex-default-bibliography
-             "/Users/dan/Dropbox/Public/t/main")
+             "/Users/dan/Dropbox/notes/lab/writings/main")
 
 (add-to-list 'reftex-bibpath-environment-variables
-             "/Users/dan/Dropbox/Public/t/")
+             "/Users/dan/Dropbox/notes/lab/writings/")
 (setq reftex-external-file-finders
       '(("tex" . "/usr/texbin/kpsewhich -format=.tex %f")
   ("bib" . "/usr/texbin/kpsewhich -format=.bib %f")))
