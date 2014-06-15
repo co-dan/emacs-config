@@ -27,8 +27,7 @@
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;; LaTeX
-
-(TeX-global-PDF-mode t)
+(add-hook 'LaTeX-mode-hook 'TeX-global-PDF-mode)
 ;; (setq TeX-parse-self t)
 ;; (setq-default TeX-master nil)
 

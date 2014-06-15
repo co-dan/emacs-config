@@ -1,6 +1,6 @@
 ;; Programming stuff
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Haskell mode
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -46,9 +46,14 @@ added to `haskell-mode-hook'"
 ;;(setq haskell-stylish-on-save t)
 
 ;; Git & other VCS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (global-set-key (kbd "C-x g") 'magit-status)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; HTML/CSS/bla-bla
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (add-to-list 'auto-mode-alist '("\\.html?$" . sgml-mode))
 (require 'mustache-mode)
 (autoload 'sgml-close-tag "sgml-mode")
@@ -59,23 +64,32 @@ added to `haskell-mode-hook'"
 (define-key mustache-mode-map (kbd "C-c /") 'sgml-close-tag)
 (define-key mustache-mode-map (kbd "RET") nil)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; SML
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (setenv "PATH" (concat "/usr/local/Cellar/smlnj/110.75/libexec/bin:" (getenv "PATH")))
 (setq exec-path (cons "/usr/local/Cellar/smlnj/110.75/libexec/bin" exec-path))
 (add-to-list 'auto-mode-alist '("\\.\\(sml\\|sig\\)\\'" . sml-mode))
 
-;; Proof General
-(load-file "~/ProofGeneral/generic/proof-site.el")
-;; (setq coq-prog-args
-;;       '("-emacs-U"
-;;         "-R" "/Users/dan/projects/coq-categories" "Cat"))
-(setq coq-prog-args
-      (append
-       '("-R" "/Users/dan/projects/math-classes/src" "MathClasses"
-         "-R" "/Users/dan/projects/coq-categories" "Cat")
-       '("-emacs-U")))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Proof General/Coq
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; (load-file "~/ProofGeneral/generic/proof-site.el")
+;; ;; (setq coq-prog-args
+;; ;;       '("-emacs-U"
+;; ;;         "-R" "/Users/dan/projects/coq-categories" "Cat"))
+;; (setq coq-prog-args
+;;       (append
+;;        '("-R" "/Users/dan/projects/math-classes/src" "MathClasses"
+;;          "-R" "/Users/dan/projects/coq-categories" "Cat")
+;;        '("-emacs-U")))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Flymake
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (global-set-key "\M-n" 'flymake-goto-next-error)
 (global-set-key "\M-p" 'flymake-goto-prev-error)
 (global-set-key "\M-?" 'flymake-display-err-menu-for-current-line)
@@ -84,12 +98,7 @@ added to `haskell-mode-hook'"
  '(flymake-errline ((t (:background "firebrick"))))
  '(flymake-warnline ((t (:foreground "RoyalBlue3")))))
 
-
-;; Other
-;; (setq ruby-mode-hook nil)
-
-
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; JavaScript
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))

@@ -1,6 +1,9 @@
 ;; Main configuration entry point
 
 ;; startup
+(require 'package)
+(add-to-list 'package-archives
+  '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
 (setq inhibit-startup-message t
       color-theme-is-global t
@@ -33,7 +36,10 @@
 ;; Mac-specific options
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'super)
-(set-default-font "Monaco-15")
+(setenv "LANG" "ru_RU.UTF-8")
+(set-default-font "Monaco-16")
+;; (set-face-attribute 'default nil :family "Monaco-16")
+(set-fontset-font t 'cyrillic "Monaco-16")
 
 ;; Aquamacs settings
 (when (boundp 'aquamacs-version)
