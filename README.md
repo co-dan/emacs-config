@@ -14,3 +14,14 @@ Here is how it looks (I haven't tweaked the colors yet)
 
 *Usually I don't open Magit, markdown and org files at the same time,
  that's just for showing off*
+
+Package installation:
+
+```elisp
+(package-install 'markdown-mode)
+(package-install 'ido-vertical-mode)
+(package-install 'ido-ubiquitous)
+(package-install 'smex)
+(package-install 'window-number)
+(package-install 'auctex)
+```
