@@ -1,35 +1,61 @@
 ;; Programming stuff
 
+(require 'flycheck)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Haskell mode
-;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq exec-path (cons "~/Library/Haskell/bin" exec-path))
+(setq exec-path (cons "/Applications/ghc-7.8.2.app/Contents/bin/" exec-path))
+(setq exec-path (cons "/Users/dan/Library/Haskell/bin/" exec-path))
 
-(add-to-list 'load-path "~/projects/haskell-mode/")
+;; (add-to-list 'load-path "~/projects/haskell-mode/")
 (require 'haskell-mode-autoloads)
-(add-to-list 'Info-default-directory-list "~/projects/haskell-mode/")
-;;(setq haskell-font-lock-symbols nil)
+;; (add-to-list 'Info-default-directory-list "~/projects/haskell-mode/")
+;; ;;(setq haskell-font-lock-symbols nil)
 (add-hook 'haskell-mode-hook 'font-lock-mode)
-(setq haskell-program-name "/usr/local/bin/ghci")
+(setq haskell-program-name "/Applications/ghc-7.8.2.app/Contents/bin/ghci")
 (setq inferior-haskell-find-project-root nil)
 (define-key haskell-mode-map (kbd "C-,") 'haskell-move-nested-left)
 (define-key haskell-mode-map (kbd "C-.") 'haskell-move-nested-right)
-;; (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
+;; ;; (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
 
 ;; ;; Ghc mod
-(setq load-path (cons "/Users/dan/projects/ghc-mod/elisp" load-path))
+(setq load-path (cons "/Users/dan/Library/Haskell/ghc-7.8.2/lib/ghc-mod-4.1.3/share" load-path))
 (autoload 'ghc-init "ghc" nil t)
 (add-hook 'haskell-mode-hook (lambda () (ghc-init)))
 ;; ;;(setq haskell-mode-hook (cdr (reverse haskell-mode-hook)))
-;; ;;(setq ghc-ghc-options '("-i ~/Library/Haskell/ghc-7.6.3/lib"))
-(if (file-accessible-directory-p "~/mnt/ghcjs1/dev")
-    (setq ghc-module-command "/Users/dan/vado-ghc-mod.sh")
-    (setq ghc-module-command "/Users/dan/Library/Haskell/ghc-7.6.3/lib/ghc-mod-3.1.4/bin/ghc-mod"))
+(setq ghc-ghc-options '("-i ~/Library/Haskell/ghc-7.8.2/lib"))
+(setq ghc-module-command "/Users/dan/Library/Haskell/bin/ghc-mod")
 
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+(flycheck-define-checker haskell-ghcmod
+                         "A Haskell syntax and type checker using ghc-mod"
+                         :command ("ghc-mod" "check" source-inplace)
+                         :error-patterns
+                         ((warning line-start (file-name) ":" line ":" column ":"
+                                   (or " " "\n    ") "Warning:" (optional "\n")
+                                   (one-or-more " ")
+                                   (message (one-or-more not-newline)
+                                            (zero-or-more "\n"
+                                                          (one-or-more " ")
+                                                          (one-or-more not-newline)))
+                                   line-end)
+                          (error line-start (file-name) ":" line ":" column ":"
+                                 (or (message (one-or-more not-newline))
+                                     (and "\n" (one-or-more " ")
+                                          (message (one-or-more not-newline)
+                                                   (zero-or-more "\n"
+                                                                 (one-or-more " ")
+                                                                 (one-or-more not-newline)))))
+                                 line-end))
+                         :modes haskell-mode
+                         ;; :next-checkers ((warnings-only . haskell-hlint))
+                         )
+
+;;(add-to-list 'flycheck-checkers 'haskell-ghcmod)
+
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(add-hook 'haskell-mode-hook 'flycheck-mode)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 
 (defun haskell-style ()
@@ -43,8 +69,15 @@ added to `haskell-mode-hook'"
 
 (add-hook 'haskell-mode-hook 'haskell-style)
 
-;;(setq haskell-stylish-on-save t)
+;; ;;(setq haskell-stylish-on-save t)
 
+;;; Structured haskell mode
+
+(add-to-list 'load-path "/Users/dan/projects/structured-haskell-mode/elisp")
+(require 'shm)
+(add-hook 'haskell-mode-hook 'structured-haskell-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Git & other VCS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -76,7 +109,8 @@ added to `haskell-mode-hook'"
 ;; Proof General/Coq
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; (load-file "~/ProofGeneral/generic/proof-site.el")
+(load-file "~/ProofGeneral/generic/proof-site.el")
+(setq coq-prog-args '("-emacs"))
 ;; ;; (setq coq-prog-args
 ;; ;;       '("-emacs-U"
 ;; ;;         "-R" "/Users/dan/projects/coq-categories" "Cat"))
@@ -86,17 +120,17 @@ added to `haskell-mode-hook'"
 ;;          "-R" "/Users/dan/projects/coq-categories" "Cat")
 ;;        '("-emacs-U")))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Flymake
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; Flymake
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(global-set-key "\M-n" 'flymake-goto-next-error)
-(global-set-key "\M-p" 'flymake-goto-prev-error)
-(global-set-key "\M-?" 'flymake-display-err-menu-for-current-line)
+;; (global-set-key "\M-n" 'flymake-goto-next-error)
+;; (global-set-key "\M-p" 'flymake-goto-prev-error)
+;; (global-set-key "\M-?" 'flymake-display-err-menu-for-current-line)
 
-(custom-set-faces
- '(flymake-errline ((t (:background "firebrick"))))
- '(flymake-warnline ((t (:foreground "RoyalBlue3")))))
+;; (custom-set-faces
+;;  '(flymake-errline ((t (:background "firebrick"))))
+;;  '(flymake-warnline ((t (:foreground "RoyalBlue3")))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; JavaScript

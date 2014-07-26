@@ -24,4 +24,5 @@ Package installation:
 (package-install 'smex)
 (package-install 'window-number)
 (package-install 'auctex)
+(package-install 'flycheck)
 ```
