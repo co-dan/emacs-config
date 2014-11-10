@@ -25,4 +25,6 @@ Package installation:
 (package-install 'window-number)
 (package-install 'auctex)
 (package-install 'flycheck)
+(package-install 'flycheck-haskell)
+(package-install 'paredit)
 ```
