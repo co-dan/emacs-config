@@ -2,6 +2,7 @@
 (require 'ispell)
 (setq ispell-program-name "/usr/local/bin/aspell"
       ispell-extra-args '("--sug-mode=ultra"))
+(setq ispell-dictionary "en")
 (setq ispell-list-command "list")
 (setq ispell-local-dictionary "ru")
 (add-to-list 'ispell-dictionary-alist
@@ -27,6 +28,8 @@
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;; LaTeX
+(setq-default TeX-engine 'xetex)
+(setq-default TeX-PDF-mode t)
 (add-hook 'LaTeX-mode-hook 'TeX-global-PDF-mode)
 ;; (setq TeX-parse-self t)
 ;; (setq-default TeX-master nil)
