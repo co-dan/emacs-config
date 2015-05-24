@@ -27,4 +27,5 @@ Package installation:
 (package-install 'flycheck)
 (package-install 'flycheck-haskell)
 (package-install 'paredit)
+(package-install 'god-mode)
 ```

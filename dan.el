@@ -39,6 +39,7 @@
 (setenv "LANG" "ru_RU.UTF-8")
 (set-default-font "Monaco-16")
 ;; (set-face-attribute 'default nil :family "Monaco-16")
+(set-fontset-font t 'unicode "Symbola" nil 'prepend)
 (set-fontset-font t 'cyrillic "Monaco-16")
 
 ;; Aquamacs settings
@@ -60,7 +61,9 @@
 (setq
  alect-overriding-faces
  '((hl-line ((t :inherit 'nil))))) ;; disable `hilight' face for a current line
-(load-theme 'alect-black t)
+;; (load-theme 'alect-dark t)
+(load-theme 'ample-flat t)
+(enable-theme 'ample-flat)
 
 ;; Nyan-mode
 ;; https://github.com/TeMPOraL/nyan-mode.git
@@ -119,3 +122,13 @@
 ;; Change 'yes' to 'y' and 'no' to 'n'
 (fset 'yes-or-no-p 'y-or-n-p)
 
+(require 'god-mode)
+(global-set-key (kbd "<escape>") 'god-local-mode)
+(define-key god-local-mode-map (kbd "i") 'god-local-mode)
+(defun my-update-cursor ()
+  (setq cursor-type (if (or god-local-mode buffer-read-only)
+                        'box
+                      'bar)))
+
+(add-hook 'god-mode-enabled-hook 'my-update-cursor)
+(add-hook 'god-mode-disabled-hook 'my-update-cursor)
