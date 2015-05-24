@@ -125,15 +125,27 @@ added to `haskell-mode-hook'"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (load-file "~/ProofGeneral/generic/proof-site.el")
-(setq coq-prog-args '("-emacs"))
-;; ;; (setq coq-prog-args
-;; ;;       '("-emacs-U"
-;; ;;         "-R" "/Users/dan/projects/coq-categories" "Cat"))
+;; (setq proof-prog-name "/Users/dan/projects/HoTT/hoqtop")
+;; (setq coq-compile-before-require t)
+;; (setq coq-holes-minor-mode nil)
+;; (setq coq-one-command-per-line nil)
+;; (setq coq-prog-args (quote ("-emacs")))
+;; (setq proof-auto-action-when-deactivating-scripting (quote retract))
+;; (setq proof-autosend-enable nil)
+;; (setq proof-electric-terminator-enable nil)
+;; (setq proof-shell-fiddle-frames nil)
+;; (setq proof-splash-enable t)
+;; (setq proof-sticky-errors t)
+(add-hook 'proof-goals-mode-hook (lambda () (setq proof-eagerly-raise nil)))
+(add-hook 'proof-response-mode-hook (lambda () (setq proof-eagerly-raise nil))) 
+(setq coq-prog-args
+      '("-emacs"
+        "-R" "/Users/dan/projects/HoTT/theories" "HoTT"))
 ;; (setq coq-prog-args
 ;;       (append
 ;;        '("-R" "/Users/dan/projects/math-classes/src" "MathClasses"
 ;;          "-R" "/Users/dan/projects/coq-categories" "Cat")
-;;        '("-emacs-U")))
+;;        '("-emacs")))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;; Flymake
