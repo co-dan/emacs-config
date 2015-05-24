@@ -1,5 +1,6 @@
 ;; General stuff for writing
 (require 'ispell)
+(require 'latex)
 (setq ispell-program-name "/usr/local/bin/aspell"
       ispell-extra-args '("--sug-mode=ultra"))
 (setq ispell-dictionary "en")
@@ -95,6 +96,24 @@
   )
 
 (setq preview-gs-options '("-q" "-dNOSAFER" "-dNOPAUSE" "-DNOPLATFONTS" "-dPrinted" "-dTextAlphaBits=4" "-dGraphicsAlphaBits=4"))
+
+
+;;;; latex math mode
+
+(defun LaTeX-math-bf (char dollar)
+  "Insert a \\mathbf{CHAR}.  If DOLLAR is non-nil, put $'s around it."
+  (interactive "*c\nP")
+  (if dollar (insert "$"))
+  (insert "\\mathbf{" (char-to-string char) "}")
+  (if dollar (insert "$")))
+
+(add-to-list 'LaTeX-math-list '("," LaTeX-math-bf "Bold face" nil))
+(add-to-list 'LaTeX-math-list '("." "circ" "Composition" nil))
+(add-to-list 'LaTeX-math-list '("o" "models" "Modal" nil))
+(add-to-list 'LaTeX-math-list '("8" "Box" "Modal" "□"))
+(add-to-list 'LaTeX-math-list '("9" "Diamond" "Modal" "◇"))
+(add-to-list 'LaTeX-math-list '("=" "approx" nil nil))
+
 
 ;; ORG writing
 (setq org-export-with-smart-quotes t)
