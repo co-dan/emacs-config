@@ -1,7 +1,7 @@
 ;; Getting shit done
 
-(add-to-list 'load-path "~/projects/emacs/org-mode/lisp")
-(add-to-list 'load-path "~/projects/emacs/org-mode/contrib/lisp" t)
+(add-to-list 'load-path "~/projects/org-mode/lisp")
+(add-to-list 'load-path "~/projects/org-mode/contrib/lisp")
 
 (require 'org)
 
@@ -65,6 +65,7 @@
 
 (setq org-todo-keywords
       '((type "TODO(t)" "STARTED(s)" "WAITING(w)" "|" "CANCELED(c)" "DONE(d)")
+        (type "BOOK(b)")
         (sequence "PROJECT(p)" "|" "FINISHED(f)")))
 
 (setq org-todo-keyword-faces
@@ -81,12 +82,14 @@
 (setq org-agenda-files (list "~/Dropbox/notes/notes.org"
                              "~/Dropbox/notes/projects.org"
                              "~/Dropbox/notes/study.org"
-                             "~/Dropbox/notes/research.org"))
+                             "~/Dropbox/notes/research.org"
+                             "~/Dropbox/notes/gsoc/darcsden.org"))
 
 (global-set-key (kbd "C-M-r") 'org-capture)
 (setq org-default-notes-file "~/Dropbox/notes/refile.org")
 (setq org-refile-targets (quote ((nil :maxlevel . 9)
                                  (org-agenda-files :maxlevel . 9))))
+
 ;; org-document-title
 
 (setq org-capture-templates
@@ -95,10 +98,12 @@
         ("n" "Note" entry (file org-default-notes-file)
          "* %?%i\n%U\n%a\n")))
 
+(setq org-log-done 'time)
+
 ;; org-mac-protocol
 
-(add-to-list 'load-path "/Users/dan/projects/emacs/org-mac-protocol")
-(require 'org-mac-protocol)
+;; (add-to-list 'load-path "~/projects/emacs/org-mac-protocol")
+;; (require 'org-mac-protocol)
 
 ;; org latex
 (require 'ox-latex)

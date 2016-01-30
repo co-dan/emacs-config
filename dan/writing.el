@@ -32,28 +32,6 @@
 (setq-default TeX-engine 'xetex)
 (setq-default TeX-PDF-mode t)
 (add-hook 'LaTeX-mode-hook 'TeX-global-PDF-mode)
-;; (setq TeX-parse-self t)
-;; (setq-default TeX-master nil)
-
-;; (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
-
-;; (setq TeX-source-correlate-method 'synctex)
-
-;; (add-hook 'LaTeX-mode-hook
-;;       (lambda()
-;;         (add-to-list 'TeX-expand-list
-;;              '("%q" skim-make-url))))
-
-;; (defun skim-make-url () (concat
-;;         (TeX-current-line)
-;;         " "
-;;         (expand-file-name (funcall file (TeX-output-extension) t)
-;;             (file-name-directory (TeX-master-file)))
-;;         " "
-;;         (buffer-file-name)))
-
-;; (setq TeX-view-program-list
-;;       '(("Skim" "/Applications/Skim.app/Contents/SharedSupport/displayline %q")))
 
 ;; (setq TeX-view-program-selection '((output-pdf "Skim")))
 
@@ -77,10 +55,9 @@
 (add-hook 'LaTeX-mode-hook 'outline-minor-mode)
 
 (add-to-list 'reftex-default-bibliography
-             "/Users/dan/Dropbox/notes/lab/writings/main")
-
+             "/Users/dan/Documents/Study/Realiz/realiz")
 (add-to-list 'reftex-bibpath-environment-variables
-             "/Users/dan/Dropbox/notes/lab/writings/")
+             "/Users/dan/Documents/Study/Realiz")
 (setq reftex-external-file-finders
       '(("tex" . "/usr/texbin/kpsewhich -format=.tex %f")
   ("bib" . "/usr/texbin/kpsewhich -format=.bib %f")))

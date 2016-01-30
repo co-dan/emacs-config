@@ -23,8 +23,11 @@
 
 (setq debug-on-error nil)
 
-(setenv "PATH" "/Users/dan/Library/Haskell/bin:/Users/dan/.cabal/bin:/usr/local/sbin:/usr/local/bin:/usr/local/Cellar/smlnj/110.75/libexec/bin:/Users/dan/racket/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/git/bin:/usr/texbin:/Users/dan/.rvm/bin:/Users/dan/.rvm/bin")
+(setenv "PATH" "/Library/TeX/texbin:/Users/dan/projects/agda/.cabal-sandbox/bin:/Users/dan/Library/Haskell/bin:/Users/dan/.cabal/bin:/usr/local/sbin:/usr/local/bin:/usr/local/Cellar/smlnj/110.75/libexec/bin:/Users/dan/racket/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/git/bin:/usr/texbin:/Users/dan/.rvm/bin:/Users/dan/.rvm/bin:/Applications/ghc-7.8.2.app/Contents/bin")
 (add-to-list 'exec-path "/usr/local/bin")
+(add-to-list 'exec-path "/Library/TeX/texbin")
+(add-to-list 'exec-path "/Users/dan/projects/agda/.cabal-sandbox/bin")
+(add-to-list 'exec-path "/Applications/ghc-7.8.2.app/Contents/bin/")
 
 (menu-bar-mode 1)
 (scroll-bar-mode -1)
@@ -37,10 +40,11 @@
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'super)
 (setenv "LANG" "ru_RU.UTF-8")
-(set-default-font "Monaco-16")
-;; (set-face-attribute 'default nil :family "Monaco-16")
+(set-default-font "Monaco-18")
+;; (set-face-attribute 'default nil :family "Monaco-18")
 (set-fontset-font t 'unicode "Symbola" nil 'prepend)
-(set-fontset-font t 'cyrillic "Monaco-16")
+(set-fontset-font t 'cyrillic "Menlo-16")
+(setq mac-allow-anti-aliasing 't)
 
 ;; Aquamacs settings
 (when (boundp 'aquamacs-version)
@@ -55,15 +59,8 @@
 (setq ring-bell-function (lambda nil (message "")))
 
 ;;;;;;; Color themes!
-;; https://github.com/alezost/alect-themes
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/alect-themes")
-(add-to-list 'load-path "~/.emacs.d/themes/alect-themes")
-(setq
- alect-overriding-faces
- '((hl-line ((t :inherit 'nil))))) ;; disable `hilight' face for a current line
-;; (load-theme 'alect-dark t)
-(load-theme 'ample-flat t)
-(enable-theme 'ample-flat)
+(load-theme 'zenburn t)
+(enable-theme 'zenburn)
 
 ;; Nyan-mode
 ;; https://github.com/TeMPOraL/nyan-mode.git
@@ -114,6 +111,8 @@
 
 
 ;; save open buffers
+(setq desktop-path '("~/.emacs.d/"))
+(setq desktop-base-file-name "emacs-desktop")
 (desktop-save-mode 1)
 
 (global-linum-mode 1)

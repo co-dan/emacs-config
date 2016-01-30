@@ -15,22 +15,25 @@
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
 
+
+;; Geiser
+
+(setq geiser-active-implementations '(racket))
+(add-hook 'scheme-mode-hook 'geiser-mode)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Haskell mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq exec-path (cons "/Applications/ghc-7.8.2.app/Contents/bin/" exec-path))
-(setq exec-path (cons "/Users/dan/Library/Haskell/bin/" exec-path))
+(setq exec-path (cons "/Users/dan/.stack/programs/x86_64-osx/ghc-7.10.2/bin/" exec-path))
 
 ;; (add-to-list 'load-path "~/projects/haskell-mode/")
 (require 'haskell-mode-autoloads)
 ;; (add-to-list 'Info-default-directory-list "~/projects/haskell-mode/")
 ;; ;;(setq haskell-font-lock-symbols nil)
 (add-hook 'haskell-mode-hook 'font-lock-mode)
-(setq haskell-program-name "/Applications/ghc-7.8.2.app/Contents/bin/ghci")
+(setq haskell-program-name "/Users/dan/.stack/programs/x86_64-osx/ghc-7.10.2/bin/ghci")
 (setq inferior-haskell-find-project-root nil)
-(define-key haskell-mode-map (kbd "C-,") 'haskell-move-nested-left)
-(define-key haskell-mode-map (kbd "C-.") 'haskell-move-nested-right)
 ;; ;; (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
 
 ;; ;; Ghc mod
@@ -69,9 +72,7 @@
 (require 'flycheck-haskell)
 (eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
-;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-(add-hook 'haskell-mode-hook 'flycheck-mode)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+;; (add-hook 'haskell-mode-hook 'flycheck-mode)
 
 (defun haskell-style ()
   "Sets the current buffer to use Haskell Style. Meant to be
@@ -91,12 +92,14 @@ added to `haskell-mode-hook'"
 (add-to-list 'load-path "/Users/dan/projects/structured-haskell-mode/elisp")
 (require 'shm)
 (add-hook 'haskell-mode-hook 'structured-haskell-mode)
+(setq shm-program-name "/Users/dan/.local/bin/structured-haskell-mode")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Git & other VCS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (global-set-key (kbd "C-x g") 'magit-status)
+(setq magit-auto-revert-mode nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; HTML/CSS/bla-bla
@@ -158,6 +161,29 @@ added to `haskell-mode-hook'"
 ;; (custom-set-faces
 ;;  '(flymake-errline ((t (:background "firebrick"))))
 ;;  '(flymake-warnline ((t (:foreground "RoyalBlue3")))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Agda
+
+(load-file (let ((coding-system-for-read 'utf-8))
+                (shell-command-to-string "agda-mode locate")))
+;; (setq agda2-highlight-face-groups '(default-faces)) ;; readable fontface
+(require 'zenburn-theme )
+(zenburn-with-color-variables
+  (custom-set-faces
+   `(agda2-highlight-datatype-face ((t (:inherit font-lock-type-face))))
+   `(agda2-highlight-field-face ((t (:foreground ,zenburn-green+2))))
+   `(agda2-highlight-function-face ((t (:foreground ,zenburn-cyan))))
+   `(agda2-highlight-inductive-constructor-face ((t (:foreground ,zenburn-yellow-1))))
+   `(agda2-highlight-keyword-face ((t (:inherit font-lock-keyword-face))))
+   `(agda2-highlight-module-face ((t (:inherit font-lock-variable-name-face))))
+   `(agda2-highlight-number-face ((t (:foreground ,zenburn-green+4))))
+   `(agda2-highlight-operator-face ((t (:foreground ,zenburn-cyan))))
+   `(agda2-highlight-primitive-face ((t (:foreground ,zenburn-fg :weight bold))))
+   `(agda2-highlight-primitive-type-face ((t (:inherit font-lock-variable-name-face :weight bold))))
+   `(agda2-highlight-error-face ((t (:foreground ,zenburn-red-1 :weight bold :underline t))))
+   '(agda2-highlight-record-face ((t (:foreground "SkyBlue2"))))
+   '(proof-locked-face ((t (:background "gray10"))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; JavaScript
